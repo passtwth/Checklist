@@ -7,16 +7,22 @@
 //
 
 import UIKit
+import CoreData
 
 class CheckListVC: UITableViewController {
     
-    var itemArray = [item]()
-    let userDefaults = UserDefaults.standard
-    let fileManagerPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("items.plist")
+    @IBOutlet weak var searchBarUI: UISearchBar!
+    var itemArray = [Item]()
+    //let userDefaults = UserDefaults.standard
+    //let fileManagerPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("items.plist")
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        searchBarUI.delegate = self
+        searchBarUI.showsCancelButton = true
         
         let checkNib = UINib(nibName: "CheckCell", bundle: nil)
         self.tableView.register(checkNib, forCellReuseIdentifier: "CheckCell")
@@ -25,9 +31,9 @@ class CheckListVC: UITableViewController {
 
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
-        
     }
-
+   
+    
 
     // MARK: - Table view data source
 
@@ -49,13 +55,14 @@ class CheckListVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if itemArray[indexPath.row].checkMark == true {
-            itemArray[indexPath.row].checkMark = false
-        } else {
-            itemArray[indexPath.row].checkMark = true
-        }
-        self.savingData(indexPath: indexPath)
+        itemArray[indexPath.row].checkMark = !itemArray[indexPath.row].checkMark
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        
+        self.savingData()
+        
+        
+        
     }
     //MARK: Button UI
     @IBAction func addItem(_ sender: UIBarButtonItem) {
@@ -65,14 +72,14 @@ class CheckListVC: UITableViewController {
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let addAction = UIAlertAction(title: "Add item", style: UIAlertActionStyle.default) { (action) in
             if let newItemText = textfield.text, !newItemText.isEmpty {
-                let newItem = item()
+                let newItem = Item(context: self.context)
                 newItem.title = newItemText
+                newItem.checkMark = false
                 self.itemArray.append(newItem)
                 let index = self.itemArray.index(of: newItem)!
                 let indexPath = IndexPath(row: index, section: 0)
                 self.tableView.insertRows(at: [indexPath], with: .automatic)
-                
-                self.savingData(indexPath: indexPath)
+                self.savingData()
             }
         }
         
@@ -88,31 +95,64 @@ class CheckListVC: UITableViewController {
     }
     
     //MARK: saving loading use FileManager PLE
-    func savingData(indexPath: IndexPath) {
-        let PLE = PropertyListEncoder()
+    func savingData() {
+//        let PLE = PropertyListEncoder()
         do {
-            let data = try PLE.encode(itemArray)
-            try data.write(to: fileManagerPath!)
+//            let data = try PLE.encode(itemArray)
+//            try data.write(to: fileManagerPath!)
+            try context.save()
         } catch {
             print(error.localizedDescription)
         }
-        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
-    func loadingData() {
-        let PLE = PropertyListDecoder()
+    func loadingData(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
+//        let PLE = PropertyListDecoder()
+//        do {
+//            let data = try Data(contentsOf: fileManagerPath!)
+//            itemArray = try PLE.decode([item].self, from: data)
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+        
         do {
-            let data = try Data(contentsOf: fileManagerPath!)
-            itemArray = try PLE.decode([item].self, from: data)
+            itemArray = try context.fetch(request)
         } catch {
             print(error.localizedDescription)
         }
-        tableView.reloadData()
+        self.tableView.reloadData()
     }
     
 }
 
-
+extension CheckListVC: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBarUI.text!)
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        
+        loadingData(with: request)
+        
+        
+    }
+    /*
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        loadingData()
+        DispatchQueue.main.async {
+            self.searchBarUI.resignFirstResponder()
+        }
+    }
+    */
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadingData()
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+    }
+}
 
 
 

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AF9271F6205DDB9D00B64B2A /* itemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9271F5205DDB9D00B64B2A /* itemData.swift */; };
 		AFF0F3E0205D206F0048DA16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF0F3DF205D206F0048DA16 /* AppDelegate.swift */; };
 		AFF0F3E5205D206F0048DA16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFF0F3E3205D206F0048DA16 /* Main.storyboard */; };
 		AFF0F3E8205D206F0048DA16 /* CheckList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AFF0F3E6205D206F0048DA16 /* CheckList.xcdatamodeld */; };
@@ -18,7 +17,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AF9271F5205DDB9D00B64B2A /* itemData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = itemData.swift; sourceTree = "<group>"; };
 		AFF0F3DC205D206F0048DA16 /* CheckList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFF0F3DF205D206F0048DA16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AFF0F3E4205D206F0048DA16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -46,7 +44,6 @@
 			children = (
 				AFF0F3E9205D206F0048DA16 /* Assets.xcassets */,
 				AFF0F3EB205D206F0048DA16 /* LaunchScreen.storyboard */,
-				AFF0F3E6205D206F0048DA16 /* CheckList.xcdatamodeld */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -71,7 +68,7 @@
 		AF9271F4205DD8E900B64B2A /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				AF9271F5205DDB9D00B64B2A /* itemData.swift */,
+				AFF0F3E6205D206F0048DA16 /* CheckList.xcdatamodeld */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -180,7 +177,6 @@
 			files = (
 				AFF0F3E8205D206F0048DA16 /* CheckList.xcdatamodeld in Sources */,
 				AFF0F3E0205D206F0048DA16 /* AppDelegate.swift in Sources */,
-				AF9271F6205DDB9D00B64B2A /* itemData.swift in Sources */,
 				AFF0F3F5205D20AF0048DA16 /* CheckListVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
