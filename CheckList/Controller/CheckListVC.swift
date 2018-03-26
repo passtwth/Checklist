@@ -13,6 +13,11 @@ class CheckListVC: UITableViewController {
     
     @IBOutlet weak var searchBarUI: UISearchBar!
     var itemArray = [Item]()
+    var selecteCategory: Category? {
+        didSet {
+            loadingData()
+        }
+    }
     //let userDefaults = UserDefaults.standard
     //let fileManagerPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("items.plist")
     
@@ -27,9 +32,9 @@ class CheckListVC: UITableViewController {
         let checkNib = UINib(nibName: "CheckCell", bundle: nil)
         self.tableView.register(checkNib, forCellReuseIdentifier: "CheckCell")
         
-        loadingData()
+        
 
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        //print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)) // filePath
         
     }
    
@@ -75,6 +80,7 @@ class CheckListVC: UITableViewController {
                 let newItem = Item(context: self.context)
                 newItem.title = newItemText
                 newItem.checkMark = false
+                newItem.parentCategory = self.selecteCategory //coreData reference
                 self.itemArray.append(newItem)
                 let index = self.itemArray.index(of: newItem)!
                 let indexPath = IndexPath(row: index, section: 0)
@@ -106,7 +112,7 @@ class CheckListVC: UITableViewController {
         }
     }
     
-    func loadingData(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
+    func loadingData(with request: NSFetchRequest<Item> = Item.fetchRequest(), with predicate: NSPredicate? = nil) {
 //        let PLE = PropertyListDecoder()
 //        do {
 //            let data = try Data(contentsOf: fileManagerPath!)
@@ -114,6 +120,13 @@ class CheckListVC: UITableViewController {
 //        } catch {
 //            print(error.localizedDescription)
 //        }
+        
+        let selecteCategoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", (selecteCategory!.name!))
+        if let addtionalPredicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [selecteCategoryPredicate, addtionalPredicate])
+        } else {
+            request.predicate = selecteCategoryPredicate
+        }
         
         do {
             itemArray = try context.fetch(request)
@@ -129,10 +142,10 @@ extension CheckListVC: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         let request: NSFetchRequest<Item> = Item.fetchRequest()
-        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBarUI.text!)
+        let itemTitlePredicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBarUI.text!)
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
-        loadingData(with: request)
+        loadingData(with: request, with: itemTitlePredicate)
         
         
     }
