@@ -8,12 +8,14 @@
 
 import UIKit
 import CoreData
+import RealmSwift
 
 class CheckListVC: UITableViewController {
     
     @IBOutlet weak var searchBarUI: UISearchBar!
-    var itemArray = [Item]()
-    var selecteCategory: Category? {
+    var itemArray: Results<Item>?
+    let realm = try! Realm()
+    var selecteCategory: CategoryList! {
         didSet {
             loadingData()
         }
@@ -47,25 +49,28 @@ class CheckListVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemArray.count
+        return itemArray?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CheckCell", for: indexPath)
-        cell.textLabel?.text = itemArray[indexPath.row].title
+        cell.textLabel?.text = itemArray?[indexPath.row].title ?? "Nothing list"
         // Configure the cell...
-        cell.accessoryType = itemArray[indexPath.row].checkMark ? .checkmark : .none
+        cell.accessoryType = itemArray![indexPath.row].checkMark ? .checkmark : .none
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        itemArray[indexPath.row].checkMark = !itemArray[indexPath.row].checkMark
+
+        let changeCheckMark = {
+            self.selecteCategory.items[indexPath.row].checkMark = !(self.selecteCategory.items[indexPath.row].checkMark)
+        }
+        doTryRealmData(complete: changeCheckMark)
+        
+        tableView.reloadRows(at: [indexPath], with: .fade)
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        
-        self.savingData()
-        
+        //self.savingData()
         
         
     }
@@ -77,15 +82,15 @@ class CheckListVC: UITableViewController {
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let addAction = UIAlertAction(title: "Add item", style: UIAlertActionStyle.default) { (action) in
             if let newItemText = textfield.text, !newItemText.isEmpty {
-                let newItem = Item(context: self.context)
-                newItem.title = newItemText
-                newItem.checkMark = false
-                newItem.parentCategory = self.selecteCategory //coreData reference
-                self.itemArray.append(newItem)
-                let index = self.itemArray.index(of: newItem)!
-                let indexPath = IndexPath(row: index, section: 0)
-                self.tableView.insertRows(at: [indexPath], with: .automatic)
-                self.savingData()
+          
+                let addNewItem = {
+                    let newItem = Item()
+                    newItem.title = newItemText
+                    newItem.dateCreated = Date()
+                    self.selecteCategory.items.append(newItem)
+                    self.tableView.reloadData()
+                }
+                self.doTryRealmData(complete: addNewItem)
             }
         }
         
@@ -101,39 +106,21 @@ class CheckListVC: UITableViewController {
     }
     
     //MARK: saving loading use FileManager PLE
-    func savingData() {
-//        let PLE = PropertyListEncoder()
-        do {
-//            let data = try PLE.encode(itemArray)
-//            try data.write(to: fileManagerPath!)
-            try context.save()
-        } catch {
-            print(error.localizedDescription)
-        }
+    
+    
+    func loadingData() {
+        itemArray = selecteCategory?.items.sorted(byKeyPath: "dateCreated", ascending: true)
+        
     }
     
-    func loadingData(with request: NSFetchRequest<Item> = Item.fetchRequest(), with predicate: NSPredicate? = nil) {
-//        let PLE = PropertyListDecoder()
-//        do {
-//            let data = try Data(contentsOf: fileManagerPath!)
-//            itemArray = try PLE.decode([item].self, from: data)
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-        
-        let selecteCategoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", (selecteCategory!.name!))
-        if let addtionalPredicate = predicate {
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [selecteCategoryPredicate, addtionalPredicate])
-        } else {
-            request.predicate = selecteCategoryPredicate
-        }
-        
+    func doTryRealmData(complete: () -> ()) {
         do {
-            itemArray = try context.fetch(request)
+            try realm.write {
+                complete()
+            }
         } catch {
-            print(error.localizedDescription)
+            print("do try realm error")
         }
-        self.tableView.reloadData()
     }
     
 }
@@ -141,12 +128,8 @@ class CheckListVC: UITableViewController {
 extension CheckListVC: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
-        let itemTitlePredicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBarUI.text!)
-        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        
-        loadingData(with: request, with: itemTitlePredicate)
-        
+        itemArray = itemArray?.filter("title CONTAINS[cd]", searchBarUI.text!).sorted(byKeyPath: "dateCreated", ascending: true)
+        tableView.reloadData()
         
     }
     /*

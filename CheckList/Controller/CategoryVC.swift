@@ -8,17 +8,22 @@
 
 import UIKit
 import CoreData
+import RealmSwift
 
 class CategoryVC: UITableViewController {
     
-   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    var category = [Category]()
+    let realm = try! Realm()
+    
+    var category: Results<CategoryList>?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let checkNib = UINib(nibName: "CheckCell", bundle: nil)
         self.tableView.register(checkNib, forCellReuseIdentifier: "CheckCell")
         
         loadingCategory()
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,21 +35,27 @@ class CategoryVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return category.count
+        return category?.count ?? 1
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CheckCell")
-        cell?.textLabel?.text = category[indexPath.row].name
+        cell?.textLabel?.text = category?[indexPath.row].name ?? "Nothing category"
+        
         return cell!
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        //let index = tableView.indexPathForSelectedRow
+        if category == nil {
+            
+        } else {
+            performSegue(withIdentifier: "itemSegue", sender: indexPath)
+        }
         
-        performSegue(withIdentifier: "itemSegue", sender: indexPath)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     @IBAction func addCategory(_ sender: UIBarButtonItem) {
-        let newCateGory = Category(context: self.context)
+        let newCateGory = CategoryList()
         var textField = UITextField()
         
         let alert = UIAlertController(title: "Category", message: "Enter New category name", preferredStyle: .alert)
@@ -53,12 +64,7 @@ class CategoryVC: UITableViewController {
                 return
             }
             newCateGory.name = textField.text!
-            self.category.append(newCateGory)
-            //self.tableView.reloadData()
-            let index = self.category.index(of: newCateGory)!
-            let indexPath = IndexPath(row: index, section: 0)
-            self.tableView.insertRows(at: [indexPath], with: .automatic)
-            self.saveCategory()
+            self.saveCategory(with: newCateGory)
         }
         alert.addTextField { (alerTextField) in textField = alerTextField }
         alert.addAction(add)
@@ -69,24 +75,26 @@ class CategoryVC: UITableViewController {
         present(alert, animated: true, completion: nil)
         
     }
-    func loadingCategory(with request: NSFetchRequest<Category> = Category.fetchRequest()) {
-        do {
-            category = try context.fetch(request)
-        } catch {
-            print("error fetch category")
-        }
+    func loadingCategory() {
+        category = realm.objects(CategoryList.self)
+        
     }
-    func saveCategory() {
+    func saveCategory(with object: CategoryList? = nil) {
         do {
-            try context.save()
+            try realm.write {
+                realm.add(object!)
+            }
         } catch {
-            print("error save category")
+            print("save category error")
         }
+        tableView.reloadData()
+
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let desVC = segue.destination as! CheckListVC
         let selecteIndexPath = sender as! IndexPath
-        desVC.selecteCategory = category[selecteIndexPath.row]
+        desVC.selecteCategory = category![selecteIndexPath.row]
+        
     }
     
 }

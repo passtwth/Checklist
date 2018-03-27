@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		39A59313A71C4F70FA9B50ED /* Pods_CheckList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77B3AAC3F71819EFBDC7E324 /* Pods_CheckList.framework */; };
 		AF4F852420663B9E006433E3 /* CategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4F852320663B9E006433E3 /* CategoryVC.swift */; };
+		AF73055F2068EE0700BD38D3 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73055E2068EE0700BD38D3 /* Item.swift */; };
+		AF7305612068EECB00BD38D3 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7305602068EECB00BD38D3 /* Category.swift */; };
 		AFF0F3E0205D206F0048DA16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF0F3DF205D206F0048DA16 /* AppDelegate.swift */; };
 		AFF0F3E5205D206F0048DA16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFF0F3E3205D206F0048DA16 /* Main.storyboard */; };
-		AFF0F3E8205D206F0048DA16 /* CheckList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AFF0F3E6205D206F0048DA16 /* CheckList.xcdatamodeld */; };
 		AFF0F3EA205D206F0048DA16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFF0F3E9205D206F0048DA16 /* Assets.xcassets */; };
 		AFF0F3ED205D206F0048DA16 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFF0F3EB205D206F0048DA16 /* LaunchScreen.storyboard */; };
 		AFF0F3F5205D20AF0048DA16 /* CheckListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF0F3F4205D20AF0048DA16 /* CheckListVC.swift */; };
@@ -18,16 +20,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1402B419FB13727B226693B1 /* Pods-CheckList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckList.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CheckList/Pods-CheckList.debug.xcconfig"; sourceTree = "<group>"; };
+		77B3AAC3F71819EFBDC7E324 /* Pods_CheckList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheckList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF4F852320663B9E006433E3 /* CategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryVC.swift; sourceTree = "<group>"; };
+		AF73055E2068EE0700BD38D3 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		AF7305602068EECB00BD38D3 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		AFF0F3DC205D206F0048DA16 /* CheckList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFF0F3DF205D206F0048DA16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AFF0F3E4205D206F0048DA16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		AFF0F3E7205D206F0048DA16 /* CheckList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CheckList.xcdatamodel; sourceTree = "<group>"; };
 		AFF0F3E9205D206F0048DA16 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AFF0F3EC205D206F0048DA16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AFF0F3EE205D206F0048DA16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = CheckList/Info.plist; sourceTree = "<group>"; };
 		AFF0F3F4205D20AF0048DA16 /* CheckListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListVC.swift; sourceTree = "<group>"; };
 		AFF0F3F6205D21F40048DA16 /* CheckCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckCell.xib; sourceTree = "<group>"; };
+		D2C7D15D0A42F41959A64B77 /* Pods-CheckList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckList.release.xcconfig"; path = "Pods/Target Support Files/Pods-CheckList/Pods-CheckList.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,12 +41,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39A59313A71C4F70FA9B50ED /* Pods_CheckList.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		25CDF1BC0AE106296D048268 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1402B419FB13727B226693B1 /* Pods-CheckList.debug.xcconfig */,
+				D2C7D15D0A42F41959A64B77 /* Pods-CheckList.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		619A8FAF07A1D2806AA42677 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				77B3AAC3F71819EFBDC7E324 /* Pods_CheckList.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AF9271F0205DD89C00B64B2A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -71,7 +95,8 @@
 		AF9271F4205DD8E900B64B2A /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				AFF0F3E6205D206F0048DA16 /* CheckList.xcdatamodeld */,
+				AF73055E2068EE0700BD38D3 /* Item.swift */,
+				AF7305602068EECB00BD38D3 /* Category.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -82,6 +107,8 @@
 				AFF0F3DE205D206F0048DA16 /* CheckList */,
 				AFF0F3EE205D206F0048DA16 /* Info.plist */,
 				AFF0F3DD205D206F0048DA16 /* Products */,
+				25CDF1BC0AE106296D048268 /* Pods */,
+				619A8FAF07A1D2806AA42677 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,9 +139,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AFF0F3F1205D206F0048DA16 /* Build configuration list for PBXNativeTarget "CheckList" */;
 			buildPhases = (
+				2612A29F2175C9AD3BE5687C /* [CP] Check Pods Manifest.lock */,
 				AFF0F3D8205D206F0048DA16 /* Sources */,
 				AFF0F3D9205D206F0048DA16 /* Frameworks */,
 				AFF0F3DA205D206F0048DA16 /* Resources */,
+				04D0DDE3196A9983DD009DD8 /* [CP] Embed Pods Frameworks */,
+				045E62C01B20649DC330DD62 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -173,15 +203,72 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		045E62C01B20649DC330DD62 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CheckList/Pods-CheckList-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		04D0DDE3196A9983DD009DD8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CheckList/Pods-CheckList-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CheckList/Pods-CheckList-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2612A29F2175C9AD3BE5687C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CheckList-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AFF0F3D8205D206F0048DA16 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AFF0F3E8205D206F0048DA16 /* CheckList.xcdatamodeld in Sources */,
 				AFF0F3E0205D206F0048DA16 /* AppDelegate.swift in Sources */,
 				AF4F852420663B9E006433E3 /* CategoryVC.swift in Sources */,
+				AF73055F2068EE0700BD38D3 /* Item.swift in Sources */,
 				AFF0F3F5205D20AF0048DA16 /* CheckListVC.swift in Sources */,
+				AF7305612068EECB00BD38D3 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +403,7 @@
 		};
 		AFF0F3F2205D206F0048DA16 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1402B419FB13727B226693B1 /* Pods-CheckList.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -331,6 +419,7 @@
 		};
 		AFF0F3F3205D206F0048DA16 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D2C7D15D0A42F41959A64B77 /* Pods-CheckList.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -366,19 +455,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		AFF0F3E6205D206F0048DA16 /* CheckList.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				AFF0F3E7205D206F0048DA16 /* CheckList.xcdatamodel */,
-			);
-			currentVersion = AFF0F3E7205D206F0048DA16 /* CheckList.xcdatamodel */;
-			path = CheckList.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = AFF0F3D4205D206F0048DA16 /* Project object */;
 }
