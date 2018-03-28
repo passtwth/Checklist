@@ -7,10 +7,11 @@
 //
 
 import UIKit
-import CoreData
-import RealmSwift
 
-class CategoryVC: UITableViewController {
+import RealmSwift
+import SwipeCellKit
+
+class CategoryVC: SwipeCellVC {
     
     let realm = try! Realm()
     
@@ -18,8 +19,9 @@ class CategoryVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let checkNib = UINib(nibName: "CheckCell", bundle: nil)
-        self.tableView.register(checkNib, forCellReuseIdentifier: "CheckCell")
+        let nib = UINib(nibName: "CheckCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "CheckCell")
+        tableView.rowHeight = 60
         
         loadingCategory()
         
@@ -32,27 +34,19 @@ class CategoryVC: UITableViewController {
     }
 
     // MARK: - Table view data source
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        do {
-            try realm.write {
-                realm.delete(category![indexPath.row])
-            }
-        } catch {
-            print("delete error")
-        }
-        tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.top)
-    }
+    
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         return category?.count ?? 1
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CheckCell")
-        cell?.textLabel?.text = category?[indexPath.row].name ?? "Nothing category"
-        
-        return cell!
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        cell.textLabel?.text = category?[indexPath.row].name ?? "Nothing category"
+    
+        return cell
     }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //let index = tableView.indexPathForSelectedRow
         if category == nil {
@@ -62,6 +56,14 @@ class CategoryVC: UITableViewController {
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    override func updateDeletion(with indexpath: IndexPath) {
+        do {
+            try realm.write {
+                realm.delete(category![indexpath.row])
+            }
+
+        } catch { print("Delete error") }
     }
     
     @IBAction func addCategory(_ sender: UIBarButtonItem) {
@@ -108,3 +110,4 @@ class CategoryVC: UITableViewController {
     }
     
 }
+

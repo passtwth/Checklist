@@ -7,10 +7,11 @@
 //
 
 import UIKit
-import CoreData
-import RealmSwift
 
-class CheckListVC: UITableViewController {
+import RealmSwift
+import SwipeCellKit
+
+class CheckListVC: SwipeCellVC {
     
     @IBOutlet weak var searchBarUI: UISearchBar!
     var itemArray: Results<Item>?
@@ -23,7 +24,6 @@ class CheckListVC: UITableViewController {
     //let userDefaults = UserDefaults.standard
     //let fileManagerPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("items.plist")
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,7 @@ class CheckListVC: UITableViewController {
         let checkNib = UINib(nibName: "CheckCell", bundle: nil)
         self.tableView.register(checkNib, forCellReuseIdentifier: "CheckCell")
         
-        
+        tableView.rowHeight = 60
 
         //print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)) // filePath
         
@@ -53,12 +53,19 @@ class CheckListVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CheckCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         cell.textLabel?.text = itemArray?[indexPath.row].title ?? "Nothing list"
         // Configure the cell...
         cell.accessoryType = itemArray![indexPath.row].checkMark ? .checkmark : .none
         
         return cell
+    }
+
+    override func updateDeletion(with indexpath: IndexPath) {
+        let delection = {
+            self.realm.delete(self.selecteCategory.items[indexpath.row])
+        }
+        doTryRealmData(complete: delection)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -105,7 +112,7 @@ class CheckListVC: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    //MARK: saving loading use FileManager PLE
+    //MARK: saving loading
     
     
     func loadingData() {

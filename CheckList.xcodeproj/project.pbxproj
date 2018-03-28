@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		39A59313A71C4F70FA9B50ED /* Pods_CheckList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77B3AAC3F71819EFBDC7E324 /* Pods_CheckList.framework */; };
+		AF41C9FF206B281600F697A6 /* SwipeCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF41C9FE206B281600F697A6 /* SwipeCellVC.swift */; };
 		AF4F852420663B9E006433E3 /* CategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4F852320663B9E006433E3 /* CategoryVC.swift */; };
 		AF73055F2068EE0700BD38D3 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73055E2068EE0700BD38D3 /* Item.swift */; };
 		AF7305612068EECB00BD38D3 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7305602068EECB00BD38D3 /* Category.swift */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		1402B419FB13727B226693B1 /* Pods-CheckList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckList.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CheckList/Pods-CheckList.debug.xcconfig"; sourceTree = "<group>"; };
 		77B3AAC3F71819EFBDC7E324 /* Pods_CheckList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheckList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF41C9FE206B281600F697A6 /* SwipeCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeCellVC.swift; sourceTree = "<group>"; };
 		AF4F852320663B9E006433E3 /* CategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryVC.swift; sourceTree = "<group>"; };
 		AF73055E2068EE0700BD38D3 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		AF7305602068EECB00BD38D3 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 			children = (
 				AFF0F3F4205D20AF0048DA16 /* CheckListVC.swift */,
 				AF4F852320663B9E006433E3 /* CategoryVC.swift */,
+				AF41C9FE206B281600F697A6 /* SwipeCellVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				AFF0F3E0205D206F0048DA16 /* AppDelegate.swift in Sources */,
 				AF4F852420663B9E006433E3 /* CategoryVC.swift in Sources */,
 				AF73055F2068EE0700BD38D3 /* Item.swift in Sources */,
+				AF41C9FF206B281600F697A6 /* SwipeCellVC.swift in Sources */,
 				AFF0F3F5205D20AF0048DA16 /* CheckListVC.swift in Sources */,
 				AF7305612068EECB00BD38D3 /* Category.swift in Sources */,
 			);
