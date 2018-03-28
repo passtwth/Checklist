@@ -10,6 +10,7 @@ import UIKit
 
 import RealmSwift
 import SwipeCellKit
+import ChameleonFramework
 
 class CheckListVC: SwipeCellVC {
     
@@ -29,7 +30,7 @@ class CheckListVC: SwipeCellVC {
         super.viewDidLoad()
         
         searchBarUI.delegate = self
-        searchBarUI.showsCancelButton = true
+        //searchBarUI.showsCancelButton = true
         
         let checkNib = UINib(nibName: "CheckCell", bundle: nil)
         self.tableView.register(checkNib, forCellReuseIdentifier: "CheckCell")
@@ -39,7 +40,19 @@ class CheckListVC: SwipeCellVC {
         //print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)) // filePath
         
     }
-   
+    override func viewWillAppear(_ animated: Bool) {
+        let selecteColor = HexColor(hexString: selecteCategory.colorHex!)
+        
+        guard let navigationBar = navigationController?.navigationBar else {
+            fatalError("Error navigationBar")
+        }
+        navigationBar.barTintColor = selecteColor
+        let contrastColor = ContrastColorOf(backgroundColor: selecteColor, returnFlat: true)
+        navigationBar.tintColor = contrastColor
+        navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: contrastColor]
+        title = selecteCategory.name
+        searchBarUI.barTintColor = selecteColor
+    }
     
 
     // MARK: - Table view data source
@@ -56,6 +69,12 @@ class CheckListVC: SwipeCellVC {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         cell.textLabel?.text = itemArray?[indexPath.row].title ?? "Nothing list"
         // Configure the cell...
+        
+        let selectColor = HexColor(hexString: selecteCategory.colorHex!)
+        let darken = selectColor.darken(byPercentage: CGFloat(indexPath.row) / CGFloat((itemArray?.count)!) )
+        //print("\(CGFloat(indexPath.row) / CGFloat((itemArray?.count)!))")
+        cell.backgroundColor = darken
+        cell.textLabel?.textColor = UIColor(contrastingBlackOrWhiteColorOn: darken, isFlat: true)
         cell.accessoryType = itemArray![indexPath.row].checkMark ? .checkmark : .none
         
         return cell

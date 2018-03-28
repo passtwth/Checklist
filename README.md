@@ -1,3 +1,6 @@
+Use ChameleonFramework forge color on cell.
+"ChameleonFramework designs: from https://github.com/viccalexander/Chameleon"
+
 Use SwipeCellKit practice on cell editStyle deletion.
 "SwipeCellKit designs: from https://github.com/SwipeCellKit/SwipeCellKit"
 

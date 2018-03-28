@@ -8,4 +8,5 @@ target 'CheckList' do
   # Pods for CheckList
 pod 'RealmSwift', '~>3.3.0'
 pod 'SwipeCellKit'
+pod 'ChameleonFramework/Swift'
 end

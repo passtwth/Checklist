@@ -10,6 +10,7 @@ import UIKit
 
 import RealmSwift
 import SwipeCellKit
+import ChameleonFramework
 
 class CategoryVC: SwipeCellVC {
     
@@ -22,6 +23,7 @@ class CategoryVC: SwipeCellVC {
         let nib = UINib(nibName: "CheckCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "CheckCell")
         tableView.rowHeight = 60
+        tableView.separatorStyle = .none
         
         loadingCategory()
         
@@ -43,6 +45,15 @@ class CategoryVC: SwipeCellVC {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         cell.textLabel?.text = category?[indexPath.row].name ?? "Nothing category"
+        
+        
+        if category![indexPath.row].colorHex != nil {
+            let thatColor = HexColor(hexString: category![indexPath.row].colorHex!)
+            cell.textLabel?.textColor = UIColor(contrastingBlackOrWhiteColorOn: thatColor, isFlat: true)
+            cell.backgroundColor = thatColor
+        }
+        
+        
     
         return cell
     }
@@ -67,7 +78,7 @@ class CategoryVC: SwipeCellVC {
     }
     
     @IBAction func addCategory(_ sender: UIBarButtonItem) {
-        let newCateGory = CategoryList()
+        let newCategory = CategoryList()
         var textField = UITextField()
         
         let alert = UIAlertController(title: "Category", message: "Enter New category name", preferredStyle: .alert)
@@ -75,8 +86,12 @@ class CategoryVC: SwipeCellVC {
             guard !(textField.text!.isEmpty) else {
                 return
             }
-            newCateGory.name = textField.text!
-            self.saveCategory(with: newCateGory)
+            newCategory.name = textField.text!
+            let randomColor = UIColor.randomFlat()
+            let randomColorHexValue = UIColor.hexValue(randomColor!)
+            newCategory.colorHex = randomColorHexValue()
+            
+            self.saveCategory(with: newCategory)
         }
         alert.addTextField { (alerTextField) in textField = alerTextField }
         alert.addAction(add)
