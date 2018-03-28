@@ -32,6 +32,16 @@ class CategoryVC: UITableViewController {
     }
 
     // MARK: - Table view data source
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        do {
+            try realm.write {
+                realm.delete(category![indexPath.row])
+            }
+        } catch {
+            print("delete error")
+        }
+        tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.top)
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
