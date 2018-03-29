@@ -71,8 +71,8 @@ class CheckListVC: SwipeCellVC {
         // Configure the cell...
         
         let selectColor = HexColor(hexString: selecteCategory.colorHex!)
-        let darken = selectColor.darken(byPercentage: CGFloat(indexPath.row) / CGFloat((itemArray?.count)!) )
-        //print("\(CGFloat(indexPath.row) / CGFloat((itemArray?.count)!))")
+        let darken = selectColor.darken(byPercentage: (CGFloat(indexPath.row) / CGFloat((itemArray?.count)!) * 0.25) )
+        print((CGFloat(indexPath.row) / CGFloat((itemArray?.count)!) * 0.7))
         cell.backgroundColor = darken
         cell.textLabel?.textColor = UIColor(contrastingBlackOrWhiteColorOn: darken, isFlat: true)
         cell.accessoryType = itemArray![indexPath.row].checkMark ? .checkmark : .none

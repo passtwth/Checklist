@@ -1,3 +1,6 @@
+![image](https://gfycat.com/HealthyRealisticFirefly)
+add launch screen.
+
 Use ChameleonFramework forge color on cell.
 "ChameleonFramework designs: from https://github.com/viccalexander/Chameleon"
 

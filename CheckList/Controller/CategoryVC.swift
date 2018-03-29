@@ -15,7 +15,7 @@ import ChameleonFramework
 class CategoryVC: SwipeCellVC {
     
     let realm = try! Realm()
-    
+    var firstLaunchScreen = false
     var category: Results<CategoryList>?
     
     override func viewDidLoad() {
@@ -28,6 +28,9 @@ class CategoryVC: SwipeCellVC {
         loadingCategory()
         
         
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        launchScreen(firstLaunch: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -121,6 +124,49 @@ class CategoryVC: SwipeCellVC {
         let desVC = segue.destination as! CheckListVC
         let selecteIndexPath = sender as! IndexPath
         desVC.selecteCategory = category![selecteIndexPath.row]
+        
+    }
+    
+    func launchScreen(firstLaunch: Bool) {
+        guard !firstLaunchScreen else {
+            return
+        }
+        firstLaunchScreen = firstLaunch
+        let window = UIScreen.main.bounds
+        let launchView = UIView(frame: window)
+        launchView.backgroundColor = UIColor.flatWhite()
+        self.navigationController?.view.addSubview(launchView)
+    
+        let windowWidth = UIScreen.main.bounds.width
+        let windowHeight = UIScreen.main.bounds.height
+        
+        
+        let label = UILabel(frame: CGRect(origin: CGPoint(x: (windowWidth / 2) - 125, y: (windowHeight / 2) ), size: CGSize(width: 250, height: 50)))
+        label.center = CGPoint(x: window.midX, y: window.midY)
+        
+        let label2 = UILabel(frame: CGRect(origin: CGPoint(x: (windowWidth / 2) - 125, y: (windowHeight / 2) - 50 ), size: CGSize(width: 250, height: 50)))
+        label2.center = CGPoint(x: window.midX, y: window.midY - 50)
+        
+        
+        
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 30)
+        let shadow = NSShadow()
+        shadow.shadowColor = UIColor.black
+        shadow.shadowBlurRadius = 5
+        
+        
+        let mutable = NSMutableAttributedString(string: "CheckList Demo", attributes: [NSAttributedStringKey.foregroundColor: UIColor.flatBlack()])
+        label.attributedText = mutable
+        launchView.addSubview(label)
+        
+        UIView.animateKeyframes(withDuration: 2.0, delay: 1.0, animations: {
+            launchView.alpha = 0
+        }, completion: { (bool) in
+            
+        })
+        
+        
         
     }
     
